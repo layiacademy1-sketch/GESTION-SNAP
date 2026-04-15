@@ -173,21 +173,19 @@ export default function App() {
   return (
     <div className="min-h-screen bg-bg text-text-primary font-sans flex flex-col">
       {/* --- Header --- */}
-      <header className="px-10 py-6 border-b border-border flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold tracking-tighter uppercase">
-          SNAP MGMT
+      <header className="px-10 py-6 border-b border-border grid grid-cols-3 items-center">
+        <h1 className="text-[11px] font-black tracking-[0.2em] uppercase text-text-secondary">
+          GESTION SNAPCHAT
         </h1>
-        <div className="flex items-center gap-5">
-          <div className="text-[13px] text-text-secondary font-medium">
-            {validatedCount} / {totalCount} validés
-          </div>
+        
+        <div className="flex items-center justify-center gap-5">
           <ProgressBar current={validatedCount} total={totalCount} />
-          <div className="text-[13px] text-text-secondary font-medium">
-            Aujourd'hui: {validatedCount > 0 ? `+${Math.round((validatedCount / totalCount) * 100)}%` : '0%'}
-          </div>
+        </div>
+
+        <div className="flex justify-end">
           <button 
             onClick={resetAll}
-            className="p-2 rounded-md bg-surface border border-border hover:bg-border transition-all text-text-secondary hover:text-white ml-4"
+            className="p-2 rounded-md bg-surface border border-border hover:bg-border transition-all text-text-secondary hover:text-white"
             title="Réinitialiser tout"
           >
             <RefreshCcw size={16} />
@@ -210,18 +208,6 @@ export default function App() {
             {f === 'all' ? 'Tous les comptes' : f === 'validated' ? `Validés (${validatedCount})` : `Non validés (${totalCount - validatedCount})`}
           </button>
         ))}
-        <div className="ml-auto relative group">
-          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-text-secondary">
-            <Search size={14} />
-          </div>
-          <input 
-            type="text"
-            placeholder="Rechercher..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-surface border border-border rounded-md pl-9 pr-3 py-1 text-[12px] focus:outline-none focus:border-text-secondary transition-all text-white placeholder:text-text-secondary"
-          />
-        </div>
       </nav>
 
       {/* --- Main Container --- */}

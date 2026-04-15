@@ -25,7 +25,7 @@ export const SNAPCHAT_ACCOUNTS: string[] = [
   "Rouen infos",
   "Le havre infos",
   "Rennes infos",
-  "veripiya",
+  "veripiya infos",
   "Melli création",
   "Niya digital",
   "rohff",
