@@ -117,8 +117,21 @@ export default function App() {
         ...currentState,
         collaborators: [
           ...currentState.collaborators,
-          { id: Math.random().toString(36).substr(2, 9), name: collaboratorName }
+          { id: Math.random().toString(36).substr(2, 9), name: collaboratorName, active: true }
         ]
+      }
+    }));
+  };
+
+  const toggleCollaboratorStatus = (accountName: string, collaboratorId: string) => {
+    const currentState = getAccountState(accountName);
+    setStates(prev => ({
+      ...prev,
+      [accountName]: {
+        ...currentState,
+        collaborators: currentState.collaborators.map(c => 
+          c.id === collaboratorId ? { ...c, active: !c.active } : c
+        )
       }
     }));
   };
@@ -324,12 +337,24 @@ export default function App() {
               <ul className="mb-4 space-y-0">
                 {getAccountState(selectedAccount).collaborators.map((c) => (
                   <li key={c.id} className="flex justify-between items-center py-2.5 border-b border-border text-[13px] group/item">
-                    <span>{c.name}</span>
+                    <span className={c.active ? 'text-text-primary' : 'text-text-secondary line-through opacity-50'}>
+                      {c.name}
+                    </span>
                     <div className="flex items-center gap-3">
-                      <span className="text-text-secondary text-[12px]">50 €</span>
+                      <span className={`text-[12px] ${c.active ? 'text-text-secondary' : 'text-text-secondary/30'}`}>50 €</span>
+                      <button 
+                        onClick={() => toggleCollaboratorStatus(selectedAccount, c.id)}
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded transition-all ${
+                          c.active 
+                            ? 'bg-accent-red/10 text-accent-red hover:bg-accent-red hover:text-white' 
+                            : 'bg-accent-green/10 text-accent-green hover:bg-accent-green hover:text-white'
+                        }`}
+                      >
+                        {c.active ? 'ANNULER' : 'RÉACTIVER'}
+                      </button>
                       <button 
                         onClick={() => removeCollaborator(selectedAccount, c.id)}
-                        className="text-accent-red opacity-0 group-hover/item:opacity-100 transition-opacity"
+                        className="text-text-secondary hover:text-accent-red opacity-0 group-hover/item:opacity-100 transition-opacity"
                       >
                         <Trash2 size={14} />
                       </button>
@@ -345,7 +370,7 @@ export default function App() {
 
               <div className="mt-auto bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border border-border p-5 rounded-xl text-center">
                 <div className="text-[28px] font-extrabold text-text-primary">
-                  {getAccountState(selectedAccount).collaborators.length * 50} €
+                  {getAccountState(selectedAccount).collaborators.filter(c => c.active).length * 50} €
                 </div>
                 <div className="text-[11px] text-text-secondary uppercase mt-1 font-bold tracking-wider">
                   Total Mensuel
@@ -433,10 +458,22 @@ export default function App() {
                 <ul className="mb-4 space-y-0">
                   {getAccountState(selectedAccount).collaborators.map((c) => (
                     <li key={c.id} className="flex justify-between items-center py-2.5 border-b border-border text-[13px]">
-                      <span>{c.name}</span>
+                      <span className={c.active ? 'text-text-primary' : 'text-text-secondary line-through opacity-50'}>
+                        {c.name}
+                      </span>
                       <div className="flex items-center gap-3">
-                        <span className="text-text-secondary text-[12px]">50 €</span>
-                        <button onClick={() => removeCollaborator(selectedAccount, c.id)} className="text-accent-red"><Trash2 size={14} /></button>
+                        <span className={`text-[12px] ${c.active ? 'text-text-secondary' : 'text-text-secondary/30'}`}>50 €</span>
+                        <button 
+                          onClick={() => toggleCollaboratorStatus(selectedAccount, c.id)}
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded transition-all ${
+                            c.active 
+                              ? 'bg-accent-red/10 text-accent-red' 
+                              : 'bg-accent-green/10 text-accent-green'
+                          }`}
+                        >
+                          {c.active ? 'ANNULER' : 'ACTIVER'}
+                        </button>
+                        <button onClick={() => removeCollaborator(selectedAccount, c.id)} className="text-text-secondary"><Trash2 size={14} /></button>
                       </div>
                     </li>
                   ))}
@@ -444,7 +481,7 @@ export default function App() {
 
                 <div className="mt-auto bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border border-border p-5 rounded-xl text-center">
                   <div className="text-[28px] font-extrabold text-text-primary">
-                    {getAccountState(selectedAccount).collaborators.length * 50} €
+                    {getAccountState(selectedAccount).collaborators.filter(c => c.active).length * 50} €
                   </div>
                   <div className="text-[11px] text-text-secondary uppercase mt-1 font-bold">Total Mensuel</div>
                 </div>

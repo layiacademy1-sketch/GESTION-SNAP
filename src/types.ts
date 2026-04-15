@@ -1,6 +1,7 @@
 export interface Collaborator {
   id: string;
   name: string;
+  active: boolean;
 }
 
 export interface AccountState {
@@ -35,5 +36,6 @@ export const SNAPCHAT_ACCOUNTS: string[] = [
   "Attou",
   "Comores Mayotte",
   "angel",
-  "Gims"
+  "Gims",
+  "COM-NECT"
 ];
