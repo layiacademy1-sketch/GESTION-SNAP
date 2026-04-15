@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  
+  --color-bg: #050505;
+  --color-surface: #121212;
+  --color-border: #242424;
+  --color-accent-red: #ff3b30;
+  --color-accent-green: #34c759;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #8e8e93;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text-primary antialiased font-sans;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
